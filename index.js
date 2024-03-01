@@ -26,7 +26,8 @@ class Customer {
     return this.id;
   }
   getTransactions() {
-    return this.transactions;
+    if (this.transactions) return this.transactions;
+    else return false;
   }
   getBalance() {
     //** I have to give it initial value 0 to work**
@@ -35,7 +36,7 @@ class Customer {
     }, 0);
     return balance;
   }
-  addTransaction(amount) {
+  addTransactions(amount) {
     const balance = this.getBalance();
     if (balance + amount > 0) {
       const transaction = new Transaction(amount);
@@ -69,7 +70,7 @@ class Branch {
       (customer) => customer.id === customerId
     );
     if (customer) {
-      customer.addTransaction(amount);
+      customer.addTransactions(amount);
       return true;
     } else return false;
 
@@ -79,7 +80,7 @@ class Branch {
     // );
     // console.log(customer);
     // if (customer) {
-    //   customer.addTransaction(amount);
+    //   customer.addTransactions(amount);
     //   return true;
     // } else return false;
     //---------------------------------
@@ -180,7 +181,7 @@ arizonaBank.addCustomerTransaction(westBranch, customer1.getId(), 3000);
 arizonaBank.addCustomerTransaction(westBranch, customer1.getId(), 2000);
 arizonaBank.addCustomerTransaction(westBranch, customer2.getId(), 3000);
 
-customer1.addTransaction(-1000);
+customer1.addTransactions(-1000);
 console.log(customer1.getBalance());
 console.log(arizonaBank.listCustomers(westBranch, true));
 console.log(arizonaBank.listCustomers(sunBranch, true));
