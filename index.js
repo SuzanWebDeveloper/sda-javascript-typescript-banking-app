@@ -36,11 +36,12 @@ class Customer {
     return balance;
   }
   addTransaction(amount) {
-    const transaction = new Transaction(amount);
-    this.transactions.push(transaction);
-    return true;
-
-    //** need to do false condition**
+    const balance = this.getBalance();
+    if (balance + amount > 0) {
+      const transaction = new Transaction(amount);
+      this.transactions.push(transaction);
+      return true;
+    } else return false;
   }
 }
 
@@ -109,15 +110,23 @@ class Bank {
     }
   }
 
-  checkBranch(branch) {
-    if (this.branches.includes(branch)) return true;
-    else return false;
-  }
   addCustomerTransaction(branch, customerId, amount) {
     if (this.checkBranch(branch)) {
       branch.addCustomerTransaction(customerId, amount);
       return true;
     } else return false;
+
+    //** anisol code**
+    // const targetBranch = this.findBranchByName(branch.name);
+    // if (targetBranch) {
+    //   targetBranch.addCustomerTransaction(customerId, amount);
+    //   return true;
+    // } else return false;
+  }
+
+  checkBranch(branch) {
+    if (this.branches.includes(branch)) return true;
+    else return false;
   }
 
   //findBranchByName(branchName: string): Branch[] | null
@@ -131,19 +140,18 @@ class Bank {
   // listCustomers(branch: Branch, includeTransactions: boolean): void
   //   Description: Prints out a list of customers with their transaction details if includeTransactions is true.
   listCustomers(branch, includeTransactions) {
-    if (includeTransactions) {
-      const customers = branch.getCustomers();
-      //console.log(`Customer | `);
-      customers.forEach((customer) => {
-        console.log(`Customer Name:\n${customer.name} `);
+    const customers = branch.getCustomers();
+    customers.forEach((customer) => {
+      console.log(`Customer Name:\n${customer.name} `);
+      if (includeTransactions) {
         console.log(`Transactions:(Amount, Date) `);
         customer
           .getTransactions()
           .forEach((transaction) =>
             console.log(`${transaction.amount},  ${transaction.date}`)
           );
-      });
-    }
+      }
+    });
   }
 }
 
@@ -172,7 +180,8 @@ arizonaBank.addCustomerTransaction(westBranch, customer1.getId(), 3000);
 arizonaBank.addCustomerTransaction(westBranch, customer1.getId(), 2000);
 arizonaBank.addCustomerTransaction(westBranch, customer2.getId(), 3000);
 
-//customer1.addTransactions(-1000);
+customer1.addTransaction(-1000);
 console.log(customer1.getBalance());
 console.log(arizonaBank.listCustomers(westBranch, true));
 console.log(arizonaBank.listCustomers(sunBranch, true));
+console.log(sunBranch.getCustomers());
