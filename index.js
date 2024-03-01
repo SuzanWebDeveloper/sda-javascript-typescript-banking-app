@@ -51,8 +51,8 @@ class Branch {
   constructor(name) {
     this.name = name;
   }
-  getName(name) {
-    this.name = name;
+  getName() {
+    return this.name;
   }
   getCustomers() {
     return this.customers;
@@ -64,12 +64,24 @@ class Branch {
     } else return false;
   }
   addCustomerTransaction(customerId, amount) {
-    this.customers.find((customer) => {
-      if (customer.id === customerId) {
-        customer.addTransactions(amount);
-        return true;
-      } else return false;
-    });
+    const customer = this.customers.find(
+      (customer) => customer.id === customerId
+    );
+    if (customer) {
+      customer.addTransaction(amount);
+      return true;
+    } else return false;
+
+    // ** This works too **
+    // const customer = this.customers.find(
+    //   ({ id}) => id === customerId
+    // );
+    // console.log(customer);
+    // if (customer) {
+    //   customer.addTransaction(amount);
+    //   return true;
+    // } else return false;
+    //---------------------------------
   }
 }
 
@@ -82,19 +94,15 @@ class Bank {
   }
 
   addBranch(branch) {
-    this.branches.find((br) => {
-      if (br.name === branch.name) return false;
-      else {
-        this.branches.push(branch);
-        return false;
-      }
-    });
+    if (this.branches.includes(branch)) return false;
+    else {
+      this.branches.push(branch);
+      return true;
+    }
   }
 
   addCustomer(branch, customer) {
-    //if customer in branch don't add
-    //this.branches.includes(branch)
-    if (branch.getCustomers.includes(customer)) return false;
+    if (branch.getCustomers().includes(customer)) return false;
     else {
       branch.addCustomer(customer);
       return true;
@@ -106,7 +114,7 @@ class Bank {
     else return false;
   }
   addCustomerTransaction(branch, customerId, amount) {
-    if (this.checkBranch()) {
+    if (this.checkBranch(branch)) {
       branch.addCustomerTransaction(customerId, amount);
       return true;
     } else return false;
@@ -115,29 +123,56 @@ class Bank {
   //findBranchByName(branchName: string): Branch[] | null
   // Description: Returns a list of matched branches with the specified branchName or null if no matches were found.
   findBranchByName(branchName) {
-    const result = this.branches.find((branch) => {
-      if (branch.name === branchName) return branch;
-      else return null;
-    });
-    return result;
+    const result = this.branches.find((branch) => branch.name === branchName);
+    if (result) return result;
+    else return null;
   }
 
   // listCustomers(branch: Branch, includeTransactions: boolean): void
   //   Description: Prints out a list of customers with their transaction details if includeTransactions is true.
   listCustomers(branch, includeTransactions) {
-    const customers = branch.getCustomers();
-    console.log(`${customers.name}, `);
+    if (includeTransactions) {
+      const customers = branch.getCustomers();
+      //console.log(`Customer | `);
+      customers.forEach((customer) => {
+        console.log(`Customer Name:\n${customer.name} `);
+        console.log(`Transactions:(Amount, Date) `);
+        customer
+          .getTransactions()
+          .forEach((transaction) =>
+            console.log(`${transaction.amount},  ${transaction.date}`)
+          );
+      });
+    }
   }
 }
 
-//------------------------------
+//---------------------------------------------------
 
-const trans = new Transaction(50);
-console.log(trans);
-
+const arizonaBank = new Bank('Arizona');
+const westBranch = new Branch('West Branch');
+const sunBranch = new Branch('Sun Branch');
 const customer1 = new Customer('John', 1);
-customer1.addTransaction(10);
-customer1.addTransaction(23);
+const customer2 = new Customer('Anna', 2);
+const customer3 = new Customer('John', 3);
 
-console.log(customer1.getTransactions());
+arizonaBank.addBranch(westBranch);
+arizonaBank.addBranch(sunBranch);
+arizonaBank.addBranch(westBranch);
+
+arizonaBank.findBranchByName('bank');
+arizonaBank.findBranchByName('sun');
+
+arizonaBank.addCustomer(westBranch, customer1);
+arizonaBank.addCustomer(westBranch, customer3);
+arizonaBank.addCustomer(sunBranch, customer1);
+arizonaBank.addCustomer(sunBranch, customer2);
+
+arizonaBank.addCustomerTransaction(westBranch, customer1.getId(), 3000);
+arizonaBank.addCustomerTransaction(westBranch, customer1.getId(), 2000);
+arizonaBank.addCustomerTransaction(westBranch, customer2.getId(), 3000);
+
+//customer1.addTransactions(-1000);
 console.log(customer1.getBalance());
+console.log(arizonaBank.listCustomers(westBranch, true));
+console.log(arizonaBank.listCustomers(sunBranch, true));
