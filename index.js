@@ -73,17 +73,6 @@ class Branch {
       customer.addTransactions(amount);
       return true;
     } else return false;
-
-    // ** This works too **
-    // const customer = this.customers.find(
-    //   ({ id}) => id === customerId
-    // );
-    // console.log(customer);
-    // if (customer) {
-    //   customer.addTransactions(amount);
-    //   return true;
-    // } else return false;
-    //---------------------------------
   }
 }
 
@@ -116,13 +105,6 @@ class Bank {
       branch.addCustomerTransaction(customerId, amount);
       return true;
     } else return false;
-
-    //** anisol code**
-    // const targetBranch = this.findBranchByName(branch.name);
-    // if (targetBranch) {
-    //   targetBranch.addCustomerTransaction(customerId, amount);
-    //   return true;
-    // } else return false;
   }
 
   checkBranch(branch) {
@@ -142,15 +124,22 @@ class Bank {
   //   Description: Prints out a list of customers with their transaction details if includeTransactions is true.
   listCustomers(branch, includeTransactions) {
     const customers = branch.getCustomers();
+    console.log(
+      `List of customers with their transaction details in ${branch.name}`
+    );
     customers.forEach((customer) => {
       console.log(`Customer Name:\n${customer.name} `);
-      if (includeTransactions) {
+      if (includeTransactions && customer.transactions.length > 0) {
         console.log(`Transactions:(Amount, Date) `);
         customer
           .getTransactions()
           .forEach((transaction) =>
             console.log(`${transaction.amount},  ${transaction.date}`)
           );
+        console.log('----------------------');
+      } else {
+        console.log('No transactions found');
+        console.log('----------------------');
       }
     });
   }
@@ -176,13 +165,17 @@ arizonaBank.addCustomer(westBranch, customer1);
 arizonaBank.addCustomer(westBranch, customer3);
 arizonaBank.addCustomer(sunBranch, customer1);
 arizonaBank.addCustomer(sunBranch, customer2);
+//arizonaBank.addCustomer(westBranch, customer3);
 
 arizonaBank.addCustomerTransaction(westBranch, customer1.getId(), 3000);
 arizonaBank.addCustomerTransaction(westBranch, customer1.getId(), 2000);
 arizonaBank.addCustomerTransaction(westBranch, customer2.getId(), 3000);
+//arizonaBank.addCustomerTransaction(westBranch, customer3.getId(), 3000);
 
 customer1.addTransactions(-1000);
 console.log(customer1.getBalance());
-console.log(arizonaBank.listCustomers(westBranch, true));
-console.log(arizonaBank.listCustomers(sunBranch, true));
-console.log(sunBranch.getCustomers());
+arizonaBank.listCustomers(westBranch, true);
+//console.log(arizonaBank.listCustomers(westBranch, true));
+//console.log(arizonaBank.listCustomers(sunBranch, true));
+//console.log(sunBranch.getCustomers());
+//console.log('why undefined???');
