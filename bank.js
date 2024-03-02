@@ -28,8 +28,6 @@ arizonaBank.addCustomerTransaction(westBranch, customer2.getId(), 3000);
 customer1.addTransactions(-1000);
 console.log(customer1.getBalance());
 arizonaBank.listCustomers(westBranch, true);
+arizonaBank.listCustomers(sunBranch, true);
 //console.log(arizonaBank.listCustomers(westBranch, true));
 //console.log(arizonaBank.listCustomers(sunBranch, true));
-//console.log(sunBranch.getCustomers());
-
-console.error('test')

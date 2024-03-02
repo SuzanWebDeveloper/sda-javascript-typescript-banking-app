@@ -16,6 +16,14 @@ export class Customer {
   transactions = [];
 
   constructor(name, id) {
+    //        if(typeof name!=="string"){
+    //        console.error("Not a string")
+    //        return;
+    //        }
+    //        if (typeof name == 'string') {
+    //         this.name = name;
+    //        }
+
     this.name = name;
     this.id = id;
   }
