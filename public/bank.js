@@ -10,8 +10,12 @@ const customer3 = new index_js_1.Customer('John', 3);
 arizonaBank.addBranch(westBranch);
 arizonaBank.addBranch(sunBranch);
 arizonaBank.addBranch(westBranch);
-arizonaBank.findBranchByName('bank');
-arizonaBank.findBranchByName('sun');
+console.log(
+  `Find branch name 'bank' = ${arizonaBank.findBranchByName('bank')}`
+);
+console.log(`Find branch name 'sun' = ${arizonaBank.findBranchByName('sun')}`);
+//arizonaBank.findBranchByName('bank');
+//arizonaBank.findBranchByName('sun');
 arizonaBank.addCustomer(westBranch, customer1);
 arizonaBank.addCustomer(westBranch, customer3);
 arizonaBank.addCustomer(sunBranch, customer1);
