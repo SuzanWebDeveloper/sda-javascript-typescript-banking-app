@@ -1,5 +1,3 @@
-
-
 export class Transaction {
   amount: number;
   date: Date;
@@ -15,6 +13,12 @@ export class Customer {
   transactions: Transaction[];
 
   constructor(name: string, id: number) {
+    if (typeof name !== 'string') {
+      throw new Error('not a string');
+    }
+    if (typeof id !== 'number') {
+      throw new Error('not a number');
+    }
     this.name = name;
     this.id = id;
     this.transactions = [];
@@ -51,6 +55,9 @@ export class Branch {
   customers: Customer[];
 
   constructor(name: string) {
+    if (typeof name !== 'string') {
+      throw new Error('not a string');
+    }
     this.name = name;
     this.customers = [];
   }
@@ -82,6 +89,9 @@ export class Bank {
   branches: Branch[];
 
   constructor(name: string) {
+    if (typeof name !== 'string') {
+      throw new Error('not a string');
+    }
     this.name = name;
     this.branches = [];
   }

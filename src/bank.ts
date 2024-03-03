@@ -1,4 +1,4 @@
-import { Bank, Branch, Customer, Transaction } from './index.js';
+import { Bank, Branch, Customer, Transaction } from './index';
 
 const arizonaBank = new Bank('Arizona');
 const westBranch = new Branch('West Branch');
@@ -11,10 +11,10 @@ arizonaBank.addBranch(westBranch);
 arizonaBank.addBranch(sunBranch);
 arizonaBank.addBranch(westBranch);
 
-console.log(`Find branch name 'bank' = ${arizonaBank.findBranchByName('bank')}`);
 console.log(
-  `Find branch name 'sun' = ${arizonaBank.findBranchByName('sun')}`
+  `Find branch name 'bank' = ${arizonaBank.findBranchByName('bank')}`
 );
+console.log(`Find branch name 'sun' = ${arizonaBank.findBranchByName('sun')}`);
 //arizonaBank.findBranchByName('bank');
 //arizonaBank.findBranchByName('sun');
 

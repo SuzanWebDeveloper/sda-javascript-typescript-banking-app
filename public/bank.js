@@ -1,18 +1,16 @@
-'use strict';
-Object.defineProperty(exports, '__esModule', { value: true });
-const index_js_1 = require('./index.js');
-const arizonaBank = new index_js_1.Bank('Arizona');
-const westBranch = new index_js_1.Branch('West Branch');
-const sunBranch = new index_js_1.Branch('Sun Branch');
-const customer1 = new index_js_1.Customer('John', 1);
-const customer2 = new index_js_1.Customer('Anna', 2);
-const customer3 = new index_js_1.Customer('John', 3);
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const index_1 = require("./index");
+const arizonaBank = new index_1.Bank('Arizona');
+const westBranch = new index_1.Branch('West Branch');
+const sunBranch = new index_1.Branch('Sun Branch');
+const customer1 = new index_1.Customer('John', 1);
+const customer2 = new index_1.Customer('Anna', 2);
+const customer3 = new index_1.Customer('John', 3);
 arizonaBank.addBranch(westBranch);
 arizonaBank.addBranch(sunBranch);
 arizonaBank.addBranch(westBranch);
-console.log(
-  `Find branch name 'bank' = ${arizonaBank.findBranchByName('bank')}`
-);
+console.log(`Find branch name 'bank' = ${arizonaBank.findBranchByName('bank')}`);
 console.log(`Find branch name 'sun' = ${arizonaBank.findBranchByName('sun')}`);
 //arizonaBank.findBranchByName('bank');
 //arizonaBank.findBranchByName('sun');
