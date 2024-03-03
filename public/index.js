@@ -30,7 +30,6 @@ class Customer {
         return this.transactions;
     }
     getBalance() {
-        //** I have to give it initial value 0 to work**
         const balance = this.transactions.reduce((total, transaction) => {
             return total + transaction.amount;
         }, 0);
@@ -78,6 +77,18 @@ class Branch {
         }
         else
             return false;
+    }
+    //-------------------------------
+    searchCustomerByName(keyName) {
+        keyName = keyName.toLowerCase();
+        const customer = this.getCustomers().find((customer) => customer.name.toLowerCase() === keyName);
+        if (customer) {
+            {
+                console.log(`Seach customer ${keyName}: found `);
+            }
+        }
+        else
+            console.log(`Seach customer ${keyName}: not found `);
     }
 }
 exports.Branch = Branch;
