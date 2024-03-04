@@ -23,5 +23,5 @@ customer1.addTransactions(-1000);
 console.log(customer1.getBalance());
 arizonaBank.listCustomers(westBranch, true);
 arizonaBank.listCustomers(sunBranch, true);
-const customerKeyName = 'john';
-westBranch.searchCustomerByName(customerKeyName);
+const KeySearch = 1;
+westBranch.searchCustomerByNameOrId(KeySearch);

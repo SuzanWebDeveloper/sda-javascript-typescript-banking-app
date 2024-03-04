@@ -34,15 +34,15 @@ export class Customer {
     return this.transactions;
   }
   getBalance(): number {
-    const balance = this.transactions.reduce((total, transaction) => {
+    const balance: number = this.transactions.reduce((total, transaction) => {
       return total + transaction.amount;
     }, 0);
     return balance;
   }
   addTransactions(amount: number): boolean {
-    const balance = this.getBalance();
+    const balance: number = this.getBalance();
     if (balance + amount > 0) {
-      const transaction = new Transaction(amount);
+      const transaction: Transaction = new Transaction(amount);
       this.transactions.push(transaction);
       return true;
     } else return false;
@@ -73,7 +73,7 @@ export class Branch {
     } else return false;
   }
   addCustomerTransaction(customerId: number, amount: number): boolean {
-    const customer = this.customers.find(
+    const customer: Customer | undefined = this.customers.find(
       (customer) => customer.id === customerId
     );
     if (customer) {
@@ -84,16 +84,25 @@ export class Branch {
 
   //-------------------------------
 
-  searchCustomerByName(keyName: string) {
-    keyName = keyName.toLowerCase();
-    const customer = this.getCustomers().find(
-      (customer) => customer.name.toLowerCase() === keyName
-    );
-    if (customer) {
-      {
-        console.log(`Seach customer ${keyName}: found `);
-      }
-    } else console.log(`Seach customer ${keyName}: not found `);
+  searchCustomerByNameOrId(keySearch: string | number) {
+ 
+    if (typeof keySearch === 'number') {
+    
+      const customer = this.getCustomers().find(
+        (customer) => customer.id === keySearch
+      );
+      
+      if (customer) console.log(`Seach customer by id ${keySearch}: found `);
+      else console.log(`Seach customer by id ${keySearch}: not found `);
+    }
+    if (typeof keySearch === 'string') {
+      keySearch = keySearch.toLowerCase();
+      const customer = this.getCustomers().find(
+        (customer) => customer.name.toLowerCase() === keySearch
+      );
+      if (customer) console.log(`Seach customer ${keySearch}: found `);
+      else console.log(`Seach customer ${keySearch}: not found `);
+    }
   }
   //-------------------------------
 }
@@ -145,7 +154,9 @@ export class Bank {
   //findBranchByName(branchName: string): Branch[] | null
   // Description: Returns a list of matched branches with the specified branchName or null if no matches were found.
   findBranchByName(branchName: string): Branch | null {
-    const result = this.branches.find((branch) => branch.name === branchName);
+    const result: Branch | undefined = this.branches.find(
+      (branch) => branch.name === branchName
+    );
     if (result) return result;
     else return null;
   }
@@ -153,7 +164,7 @@ export class Bank {
   // listCustomers(branch: Branch, includeTransactions: boolean): void
   //   Description: Prints out a list of customers with their transaction details if includeTransactions is true.
   listCustomers(branch: Branch, includeTransactions: boolean) {
-    const customers = branch.getCustomers();
+    const customers: Customer[] = branch.getCustomers();
     console.log(
       `List of customers with their transaction details in ${branch.name}`
     );

@@ -79,16 +79,22 @@ class Branch {
             return false;
     }
     //-------------------------------
-    searchCustomerByName(keyName) {
-        keyName = keyName.toLowerCase();
-        const customer = this.getCustomers().find((customer) => customer.name.toLowerCase() === keyName);
-        if (customer) {
-            {
-                console.log(`Seach customer ${keyName}: found `);
-            }
+    searchCustomerByNameOrId(keySearch) {
+        if (typeof keySearch === 'number') {
+            const customer = this.getCustomers().find((customer) => customer.id === keySearch);
+            if (customer)
+                console.log(`Seach customer by id ${keySearch}: found `);
+            else
+                console.log(`Seach customer by id ${keySearch}: not found `);
         }
-        else
-            console.log(`Seach customer ${keyName}: not found `);
+        if (typeof keySearch === 'string') {
+            keySearch = keySearch.toLowerCase();
+            const customer = this.getCustomers().find((customer) => customer.name.toLowerCase() === keySearch);
+            if (customer)
+                console.log(`Seach customer ${keySearch}: found `);
+            else
+                console.log(`Seach customer ${keySearch}: not found `);
+        }
     }
 }
 exports.Branch = Branch;
